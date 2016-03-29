@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="j-interop">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../j-interop/j-interop/build/libs/j-interop.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../j-interop/j-interopdeps/build/libs/j-interopdeps.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
