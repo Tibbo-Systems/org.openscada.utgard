@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/org.openscada.opc.dcom/org.openscada.opc.dcom.iml" filepath="$PROJECT_DIR$/org.openscada.opc.dcom/org.openscada.opc.dcom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.openscada.opc.dcom.test/org.openscada.opc.dcom.test.iml" filepath="$PROJECT_DIR$/org.openscada.opc.dcom.test/org.openscada.opc.dcom.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.openscada.opc.lib/org.openscada.opc.lib.iml" filepath="$PROJECT_DIR$/org.openscada.opc.lib/org.openscada.opc.lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.openscada.opc.lib.test/org.openscada.opc.lib.test.iml" filepath="$PROJECT_DIR$/org.openscada.opc.lib.test/org.openscada.opc.lib.test.iml" />
+    </modules>
+  </component>
+</project>
