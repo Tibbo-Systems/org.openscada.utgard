@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="org.openscada.opc.dcom">
+    <output-path>$PROJECT_DIR$/out/artifacts/org_openscada_opc_dcom</output-path>
+    <root id="archive" name="org.openscada.opc.dcom.jar">
+      <element id="module-output" name="org.openscada.opc.dcom" />
+    </root>
+  </artifact>
+</component>
