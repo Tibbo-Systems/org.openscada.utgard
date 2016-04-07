@@ -5,6 +5,8 @@
       <root url="jar://$PROJECT_DIR$/../j-interop/j-interopdeps/build/libs/j-interopdeps.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../j-interop/j-interop/build/libs/j-interop-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

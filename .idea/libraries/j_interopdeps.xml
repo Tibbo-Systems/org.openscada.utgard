@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="j-interopdeps">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../org.openscada.jinterop/lib/bcprov-jdk15on-154.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../org.openscada.jinterop/lib/jcifs-1.3.18.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
