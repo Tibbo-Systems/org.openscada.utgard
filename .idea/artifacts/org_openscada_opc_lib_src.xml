@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="org.openscada.opc.lib.src">
+    <output-path>$PROJECT_DIR$/out/artifacts/org_openscada_opc_lib_src</output-path>
+    <root id="archive" name="org.openscada.opc.lib.src.jar">
+      <element id="dir-copy" path="$PROJECT_DIR$/org.openscada.opc.lib/src" />
+    </root>
+  </artifact>
+</component>
