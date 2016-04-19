@@ -110,6 +110,11 @@ public class Async20Access extends AccessBase implements IOPCDataCallback
         for ( final KeyedResult<Integer, ValueData> entry : result )
         {
             final Item item = group.findItemByClientHandle ( entry.getKey () );
+            if(item == null)
+            {
+                logger.info("Item with client handle '" + entry.getKey() + "' was not found in group. Skipping it.");
+                continue;
+            }
             logger.debug ( "Update for '{}'", item.getId () );
             updateItem ( item, new ItemState ( entry.getErrorCode (), entry.getValue ().getValue (), entry.getValue ().getTimestamp (), entry.getValue ().getQuality () ) );
         }
