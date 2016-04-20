@@ -295,7 +295,21 @@ public abstract class AccessBase implements ServerConnectionStateListener
 
         try
         {
-            this.group.remove ();
+            try
+            {
+                this.server.removeGroup(this.group, false);
+            }
+            catch ( JIException e)
+            {
+                if(e.getErrorCode() == 0x0004000F)
+                {
+                    logger.info("Group '" + group.getName() +"' was not removed because references exist ");
+                    // OPC DA 3.0 specs: HRESULT - 0x0004000F (OPC_S_INUSE)
+                    // Group will be marked as deleted, and will be removed automatically by the server when all references to this object are released.
+                }
+                else
+                    throw e;
+            }
         }
         catch ( final Throwable t )
         {
