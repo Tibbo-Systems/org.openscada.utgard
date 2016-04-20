@@ -302,11 +302,11 @@ public abstract class AccessBase implements ServerConnectionStateListener
             if(e.getErrorCode() == 0x0004000F)
             {
                 // OPC DA 3.0 specs: HRESULT - 0x0004000F (OPC_S_INUSE)
-                logger.info("Group '" + group.getName() +"' was not removed because references exist. "
+                logger.info("Group was not removed because references exist. "
                     + "Group will be marked as deleted, and will be removed automatically by the server when all references to this object are released.");
             }
             else
-                logger.warn("Removing group '" + group.getName() +"' get the following error: " + JISystem.getLocalizedMessage(e.getErrorCode()));
+                logger.warn("Removing group gets the following error: " + JISystem.getLocalizedMessage(e.getErrorCode()));
         }
         catch ( final Throwable t )
         {
