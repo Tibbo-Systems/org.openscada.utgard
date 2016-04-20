@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.jinterop.dcom.common.JIException;
+import org.jinterop.dcom.common.*;
 import org.openscada.opc.lib.common.NotConnectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -295,21 +295,18 @@ public abstract class AccessBase implements ServerConnectionStateListener
 
         try
         {
-            try
+            this.server.removeGroup(this.group, false);
+        }
+        catch ( JIException e)
+        {
+            if(e.getErrorCode() == 0x0004000F)
             {
-                this.server.removeGroup(this.group, false);
+                // OPC DA 3.0 specs: HRESULT - 0x0004000F (OPC_S_INUSE)
+                logger.info("Group '" + group.getName() +"' was not removed because references exist. "
+                    + "Group will be marked as deleted, and will be removed automatically by the server when all references to this object are released.");
             }
-            catch ( JIException e)
-            {
-                if(e.getErrorCode() == 0x0004000F)
-                {
-                    logger.info("Group '" + group.getName() +"' was not removed because references exist ");
-                    // OPC DA 3.0 specs: HRESULT - 0x0004000F (OPC_S_INUSE)
-                    // Group will be marked as deleted, and will be removed automatically by the server when all references to this object are released.
-                }
-                else
-                    throw e;
-            }
+            else
+                logger.warn("Removing group '" + group.getName() +"' get the following error: " + JISystem.getLocalizedMessage(e.getErrorCode()));
         }
         catch ( final Throwable t )
         {
