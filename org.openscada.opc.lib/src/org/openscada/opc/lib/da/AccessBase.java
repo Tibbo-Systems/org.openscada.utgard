@@ -200,7 +200,17 @@ public abstract class AccessBase implements ServerConnectionStateListener
 
         logger.debug ( "Create a new group" );
         this.group = this.server.addGroup ();
-        this.group.setActive ( true, this.period );
+        try
+        {
+            this.group.setActive ( true, this.period );
+        }
+        catch (JIException e)
+        {
+            if(e.getErrorCode() == 0x0004000D)
+                logger.info("The server does not support the requested data rate but will use the closest available rate.");
+            else
+                throw e;
+        }
         this.active = true;
 
         notifyStateListenersState ( true );
