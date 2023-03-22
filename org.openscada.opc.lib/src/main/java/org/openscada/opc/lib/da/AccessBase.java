@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.jinterop.dcom.common.JIException;
+import org.jinterop.dcom.common.*;
 import org.openscada.opc.lib.common.NotConnectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,15 +35,15 @@ public abstract class AccessBase implements ServerConnectionStateListener
 {
     private static Logger logger = LoggerFactory.getLogger ( AccessBase.class );
 
-    protected Server server = null;
+    protected Server server;
 
-    protected Group group = null;
+    protected Group group;
 
-    protected boolean active = false;
+    protected boolean active;
 
     private final List<AccessStateListener> stateListeners = new CopyOnWriteArrayList<AccessStateListener> ();
 
-    private boolean bound = false;
+    private boolean bound;
 
     /**
      * Holds the item to callback assignment
@@ -54,24 +54,22 @@ public abstract class AccessBase implements ServerConnectionStateListener
 
     protected Map<Item, ItemState> itemCache = new HashMap<Item, ItemState> ();
 
-    private int period = 0;
+    private final int period;
 
     protected Map<String, DataCallback> itemSet = new HashMap<String, DataCallback> ();
 
-    protected String logTag = null;
+    protected String logTag;
 
-    protected Logger dataLogger = null;
+    protected Logger dataLogger;
 
     public AccessBase ( final Server server, final int period ) throws IllegalArgumentException, UnknownHostException, NotConnectedException, JIException, DuplicateGroupException
     {
-        super ();
         this.server = server;
         this.period = period;
     }
 
     public AccessBase ( final Server server, final int period, final String logTag )
     {
-        super ();
         this.server = server;
         this.period = period;
         this.logTag = logTag;
@@ -181,6 +179,7 @@ public abstract class AccessBase implements ServerConnectionStateListener
         }
     }
 
+    @Override
     public void connectionStateChanged ( final boolean connected )
     {
         try
@@ -209,7 +208,17 @@ public abstract class AccessBase implements ServerConnectionStateListener
 
         logger.debug ( "Create a new group" );
         this.group = this.server.addGroup ();
-        this.group.setActive ( true );
+        try
+        {
+            this.group.setActive ( true, this.period );
+        }
+        catch (JIException e)
+        {
+            if(e.getErrorCode() == 0x0004000D)
+                logger.info("The server does not support the requested data rate but will use the closest available rate.");
+            else
+                throw e;
+        }
         this.active = true;
 
         notifyStateListenersState ( true );
@@ -304,7 +313,18 @@ public abstract class AccessBase implements ServerConnectionStateListener
 
         try
         {
-            this.group.remove ();
+            this.server.removeGroup(this.group, false);
+        }
+        catch ( JIException e)
+        {
+            if(e.getErrorCode() == 0x0004000F)
+            {
+                // OPC DA 3.0 specs: HRESULT - 0x0004000F (OPC_S_INUSE)
+                logger.info("Group was not removed because references exist. "
+                    + "Group will be marked as deleted, and will be removed automatically by the server when all references to this object are released.");
+            }
+            else
+                logger.warn("Removing group gets the following error: " + JISystem.getLocalizedMessage(e.getErrorCode()));
         }
         catch ( final Throwable t )
         {

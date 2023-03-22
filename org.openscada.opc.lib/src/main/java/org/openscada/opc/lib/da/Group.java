@@ -84,6 +84,11 @@ public class Group
         this._group.setState ( null, state, null, null, null, null );
     }
 
+    public void setActive ( final boolean state, final int period ) throws JIException
+    {
+        this._group.setState ( period, state, null, null, null, null );
+    }
+
     /**
      * remove the group from the server
      * @throws JIException 
@@ -401,6 +406,30 @@ public class Group
     public synchronized OPCAsyncIO2 getAsyncIO20 ()
     {
         return this._group.getAsyncIO2 ();
+    }
+
+    /**
+     * Set part of the group state
+     * <p>
+     * Each of the parameters may be <code>null</code> in which the parameter is
+     * not changed.
+     * </p>
+     *
+     * @param requestedUpdateRate
+     *            the requested update rate. <em>Note:</em> that the server may
+     *            return a different update rate.
+     * @param timeBias
+     *            the new time bias value
+     * @param percentDeadband
+     *            the new percent deadband value
+     * @throws JIException
+     *             if anything in the OPC communication or on the server goes
+     *             wrong
+     * @since 1.3.0
+     */
+    public void setGroupState ( final Integer requestedUpdateRate, final Integer timeBias, final Float percentDeadband ) throws JIException
+    {
+        this._group.setState ( requestedUpdateRate, null, timeBias, percentDeadband, null, null );
     }
 
     public synchronized EventHandler attach ( final IOPCDataCallback dataCallback ) throws JIException

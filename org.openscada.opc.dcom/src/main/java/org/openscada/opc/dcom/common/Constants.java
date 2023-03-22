@@ -34,4 +34,6 @@ public interface Constants
     public static final int S_OK = 0;
 
     public static final int S_FALSE = 1;
+
+    public static final int S_OPC_UNSUPPORTED_UPDATE_RATE = 0x4000D;
 }

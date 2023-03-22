@@ -36,17 +36,43 @@ public class Helper
      */
     public static Object[] callRespectSFALSE ( final IJIComObject object, final JICallBuilder callObject ) throws JIException
     {
+        return callIgnoreSpecificError ( object, callObject, org.openscada.opc.dcom.common.Constants.S_FALSE );
+    }
+
+    /**
+     * Make the COM call but do not treat specific errors as error condition for
+     * the whole call
+     * 
+     * @param object
+     *            the object to make to call on
+     * @param callObject
+     *            the call object
+     * @param ignoreErrorCode
+     *            the errors to ignore
+     * @return the result of the call
+     * @throws JIException
+     * @since 1.2.0
+     */
+    public static Object[] callIgnoreSpecificError ( final IJIComObject object, final JICallBuilder callObject, final int... ignoreErrorCode ) throws JIException
+    {
         try
         {
             return object.call ( callObject );
         }
-        catch ( JIException e )
+        catch ( final JIException e )
         {
-            if ( e.getErrorCode () != org.openscada.opc.dcom.common.Constants.S_FALSE )
+            final int rc = e.getErrorCode ();
+            for ( final int ec : ignoreErrorCode )
             {
-                throw e;
+                if ( ec == rc )
+                {
+                    // error code to ignore ... return result
+                    return callObject.getResultsInCaseOfException ();
+                }
             }
-            return callObject.getResultsInCaseOfException ();
+
+            // real error ... throw
+            throw e;
         }
     }
 
