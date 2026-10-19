@@ -4,9 +4,6 @@ import java.net.UnknownHostException;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.Ole32;
-import com.sun.jna.platform.win32.WinNT;
 import org.jinterop.dcom.common.JIException;
 import org.jinterop.dcom.common.JISystem;
 import org.jinterop.dcom.core.JISession;
@@ -32,7 +29,7 @@ public class AsyncTest {
 
         JISystem.getLogger().setLevel(Level.OFF);
         ConnectionInformation connectionInformation = new ConnectionInformation();
-        connectionInformation.setHost("127.0.0.1");
+        connectionInformation.setHost("192.168.0.104");
         connectionInformation.setDomain("");
         connectionInformation.setUser("Admin");
         connectionInformation.setPassword("admin");
