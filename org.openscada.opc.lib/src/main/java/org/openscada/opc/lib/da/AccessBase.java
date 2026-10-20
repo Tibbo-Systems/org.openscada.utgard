@@ -323,6 +323,12 @@ public abstract class AccessBase implements ServerConnectionStateListener
                 logger.info("Group was not removed because references exist. "
                     + "Group will be marked as deleted, and will be removed automatically by the server when all references to this object are released.");
             }
+            else if ( e.getErrorCode () == 0x00001051 ) // j-interop JI_SESSION_DESTROYED
+            {
+                // The session is already gone (e.g. the connection was lost before disconnect);
+                // the group no longer exists server-side, so there is nothing to remove.
+                logger.info ( "Group not removed: the session is already destroyed (connection lost)." );
+            }
             else
                 logger.warn("Removing group gets the following error: " + JISystem.getLocalizedMessage(e.getErrorCode()));
         }

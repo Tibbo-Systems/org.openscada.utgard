@@ -91,6 +91,19 @@ public class Async20Access extends AccessBase implements IOPCDataCallback
             {
                 this.eventHandler.detach ();
             }
+            catch ( final JIException e )
+            {
+                if ( e.getErrorCode () == 0x00001051 ) // j-interop JI_SESSION_DESTROYED
+                {
+                    // The session is already gone (e.g. the connection was lost before
+                    // disconnect); there is nothing to detach server-side.
+                    logger.info ( "Not detaching group: the session is already destroyed" );
+                }
+                else
+                {
+                    logger.warn ( "Failed to detach group", e );
+                }
+            }
             catch ( final Throwable e )
             {
                 logger.warn ( "Failed to detach group", e );
