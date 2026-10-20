@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openscada.utgard</groupId>
     <artifactId>org.openscada.utgard-parent</artifactId>
-    <version>1.1.4-patched</version>
+    <version>1.1.5-patched</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -14,7 +14,7 @@
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
         <maven-deploy-plugin.version>3.1.0</maven-deploy-plugin.version>
-        <jinterop.version>3.0.4-patched</jinterop.version>
+        <jinterop.version>3.0.5-patched</jinterop.version>
         <junit.version>4.12</junit.version>
         <slf4j.version>1.7.19</slf4j.version>
         <surefire.version>2.22.0</surefire.version>
